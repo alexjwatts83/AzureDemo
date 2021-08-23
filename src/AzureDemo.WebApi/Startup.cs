@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Google.Apis.Auth.AspNetCore3;
+using Google.Apis.YouTube.v3;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,8 +46,10 @@ namespace AzureDemo.WebApi
 				.AddCookie()
 				.AddGoogleOpenIdConnect(options =>
 				{
-					options.ClientId = "823365536952-5av93o3o8n1glg954ihnvfgk7boc83ta.apps.googleusercontent.com";
-					options.ClientSecret = "X1BtG0YenmDX3VUNbvx3VDSh";
+					options.ClientId = Configuration["YouTube:ClientId"];
+					options.ClientSecret = Configuration["YouTube:ClientSecret"];
+					options.Scope.Add(YouTubeService.ScopeConstants.Youtube);
+					options.CallbackPath = "/google-auth-callback";
 				});
 		}
 
