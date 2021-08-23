@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Apis.Auth.AspNetCore3;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,9 +27,28 @@ namespace AzureDemo.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
-        }
+			// This configures Google.Apis.Auth.AspNetCore3 for use in this app.
+			services
+				.AddAuthentication(o =>
+				{
+					// This forces challenge results to be handled by Google OpenID Handler, so there's no
+					// need to add an AccountController that emits challenges for Login.
+					o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+					// This forces forbid results to be handled by Google OpenID Handler, which checks if
+					// extra scopes are required and does automatic incremental auth.
+					o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+					// Default scheme that will handle everything else.
+					// Once a user is authenticated, the OAuth2 token info is stored in cookies.
+					o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+				})
+				.AddCookie()
+				.AddGoogleOpenIdConnect(options =>
+				{
+					options.ClientId = "823365536952-5av93o3o8n1glg954ihnvfgk7boc83ta.apps.googleusercontent.com";
+					options.ClientSecret = "X1BtG0YenmDX3VUNbvx3VDSh";
+				});
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,9 +62,10 @@ namespace AzureDemo.WebApi
 
             app.UseRouting();
 
-            app.UseAuthorization();
+			app.UseAuthentication();
+			app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+			app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });

@@ -21,17 +21,5 @@ namespace AzureDemo.Functions
 
 			builder.Services.Replace(ServiceDescriptor.Singleton(typeof(IConfiguration), configuration));
 		}
-
-		//public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
-		//{
-		//	var config = builder.ConfigurationBuilder.Build();
-		//	var context = builder.GetContext();
-
-		//	builder.ConfigurationBuilder
-		//		.SetBasePath(context.ApplicationRootPath)
-		//		.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-		//		.AddUserSecrets(Assembly.GetExecutingAssembly(), true)
-		//		.AddEnvironmentVariables();
-		//}
 	}
 }
