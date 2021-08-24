@@ -49,7 +49,7 @@ namespace AzureDemo.WebApi
 					options.ClientId = Configuration["YouTube:ClientId"];
 					options.ClientSecret = Configuration["YouTube:ClientSecret"];
 					options.Scope.Add(YouTubeService.ScopeConstants.Youtube);
-					options.CallbackPath = "/google-auth-callback";
+					//options.CallbackPath = "/google-auth-callback";
 				});
 		}
 
