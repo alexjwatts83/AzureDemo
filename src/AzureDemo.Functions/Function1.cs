@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace AzureDemo.Functions
 {
-    public static class Function1
+	public static class Function1
     {
         [FunctionName("Function1")]
         public static async Task<IActionResult> Run(
