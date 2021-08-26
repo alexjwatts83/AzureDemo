@@ -1,11 +1,10 @@
 using System;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
 namespace AzureDemo.Functions
 {
-    public static class QueueToServicebus
+	public static class QueueToServicebus
     {
         [FunctionName("QueueToServicebus")]
         public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
