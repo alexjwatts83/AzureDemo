@@ -4,12 +4,12 @@ namespace AzureDemo.WebApi.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class HomeController : ControllerBase
+	public class IndexController : ControllerBase
 	{
 		[HttpGet]
 		public IActionResult Index()
 		{
-			return Ok("Home");
+			return Ok("Index");
 		}
 	}
 }
